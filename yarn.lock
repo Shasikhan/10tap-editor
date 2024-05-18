@@ -5,9 +5,9 @@ __metadata:
   version: 6
   cacheKey: 8
 
-"@10play/tentap-editor@workspace:.":
+"@10play-svg/tentap-editor@workspace:.":
   version: 0.0.0-use.local
-  resolution: "@10play/tentap-editor@workspace:."
+  resolution: "@10play-svg/tentap-editor@workspace:."
   dependencies:
     "@commitlint/config-conventional": ^17.0.2
     "@evilmartians/lefthook": ^1.5.0

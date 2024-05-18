@@ -75,6 +75,18 @@ export const defaultToolbarTheme: ToolbarTheme = {
       paddingHorizontal: 0,
     },
   },
+  closeColorButton: {
+    padding: 4,
+  },
+  colorRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  colorWrapper: {
+    padding: 2,
+    borderWidth: 1,
+    borderRadius: 4,
+  },
 };
 
 export const darkToolbarTheme: Partial<ToolbarTheme> = {

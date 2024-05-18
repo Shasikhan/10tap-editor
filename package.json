@@ -1,5 +1,5 @@
 {
-  "name": "@10play/tentap-editor",
+  "name": "@10play-svg/tentap-editor",
   "version": "0.4.58",
   "description": "React Native Rich Text Editor",
   "main": "lib/commonjs/index",
@@ -64,9 +64,9 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/10play/10Tap-Editor.git"
+    "url": "git+https://github.com/Shasikhan/10tap-editor.git"
   },
-  "author": "Amir Angel <36531255+17Amir17@users.noreply.github.com> (https://www.10play.dev)",
+  "author": "Shafqat Ullah",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/10play/10Tap-Editor/issues"

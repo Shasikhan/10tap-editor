@@ -80,7 +80,7 @@ interface ColorRowProps {
   activeColor?: string;
   icon?: boolean;
 }
-const ColorRow = ({
+export const ColorRow = ({
   theme,
   colors,
   onPress,
@@ -112,7 +112,7 @@ interface ColorButtonProps {
   theme?: EditorTheme;
   icon?: boolean;
 }
-const ColorButton = ({
+export const ColorButton = ({
   theme,
   onPress,
   color,
@@ -128,7 +128,7 @@ const ColorButton = ({
   >
     {icon && (
       <View style={theme?.colorKeyboard.iconContainer}>
-        <A fill={color.displayColor || color.value} size={24} />
+        {A(color.displayColor || color.value, 24)}
       </View>
     )}
     {!icon && (

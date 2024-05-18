@@ -10,6 +10,7 @@ import H3 from './h3';
 import H4 from './h4';
 import H5 from './h5';
 import H6 from './h6';
+import Highlight from './hightlight';
 import Indent from './indent';
 import Italic from './italic';
 import Link from './link';
@@ -47,5 +48,6 @@ export const SVGs = {
   quote: Quote,
   Aa: Aa,
   a: A,
+  highlight: Highlight,
   close: Close,
 };

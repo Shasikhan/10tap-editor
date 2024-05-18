@@ -26,6 +26,9 @@ export type ToolbarTheme = {
   hidden: StyleProp<ViewStyle>;
   keyboardAvoidingView: StyleProp<ViewStyle>;
   linkBarTheme: LinkBarTheme;
+  closeColorButton: StyleProp<ViewStyle>;
+  colorRow: StyleProp<ViewStyle>;
+  colorWrapper: StyleProp<ViewStyle>;
 };
 
 export type LinkBarTheme = {

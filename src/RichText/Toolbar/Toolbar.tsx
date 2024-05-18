@@ -1,10 +1,11 @@
 import {
   FlatList,
-  // Image,
   TouchableOpacity,
   StyleSheet,
   Platform,
   View,
+  type ColorValue,
+  Pressable,
 } from 'react-native';
 import { useBridgeState } from '../useBridgeState';
 import React from 'react';
@@ -16,6 +17,9 @@ import {
 import { EditLinkBar } from './EditLinkBar';
 import { useKeyboard } from '../../utils';
 import type { EditorBridge } from '../../types';
+import { IconSVG } from '../../assets/IconSVG';
+import { EditorHelper } from '../EditorHelper';
+import { SVGs } from '../../assets';
 
 interface ToolbarProps {
   editor: EditorBridge;
@@ -29,6 +33,8 @@ export enum ToolbarContext {
   Main,
   Link,
   Heading,
+  TextColor,
+  Highlight,
 }
 
 export function Toolbar({
@@ -87,6 +93,100 @@ export function Toolbar({
           }}
           horizontal
         />
+      );
+    case ToolbarContext.Highlight:
+    case ToolbarContext.TextColor:
+      let isTextColorSelection = toolbarContext === ToolbarContext.TextColor;
+      const activeColor = editor?.getEditorState().activeColor;
+      const activeHighlight = editor?.getEditorState().activeHighlight;
+
+      const setColor = (color?: ColorValue) => {
+        if (!EditorHelper.editorLastInstance) return;
+        if (color) EditorHelper.editorLastInstance.setColor(color.toString());
+        else EditorHelper.editorLastInstance.unsetColor();
+        EditorHelper.editorLastInstance.focus();
+      };
+
+      const setHighlight = (color?: ColorValue) => {
+        if (!EditorHelper.editorLastInstance) return;
+        if (color)
+          EditorHelper.editorLastInstance.setHighlight(color.toString());
+        else EditorHelper.editorLastInstance.unsetHighlight();
+        EditorHelper.editorLastInstance.focus();
+      };
+
+      return (
+        <View
+          style={[
+            editor.theme.toolbar.toolbarBody,
+            hideToolbar ? editor.theme.toolbar.hidden : undefined,
+            editor.theme.toolbar.colorRow,
+          ]}
+        >
+          <Pressable
+            onPress={() => setToolbarContext(ToolbarContext.Main)}
+            style={editor.theme.toolbar.closeColorButton}
+          >
+            <IconSVG
+              editor={editor}
+              active={false}
+              disabled={false}
+              icon={SVGs.close}
+            />
+          </Pressable>
+          <View style={{ flex: 1 }}>
+            <FlatList
+              data={
+                !isTextColorSelection
+                  ? editor.theme.colorKeyboard.highlightSelection
+                  : editor.theme.colorKeyboard.colorSelection
+              }
+              renderItem={({ item }) => {
+                return (
+                  <TouchableOpacity
+                    onPress={() => {
+                      if (isTextColorSelection) {
+                        setColor(item.value);
+                      } else {
+                        setHighlight(item.value);
+                      }
+                    }}
+                    disabled={
+                      (isTextColorSelection ? activeColor : activeHighlight) ===
+                      item.value
+                    }
+                    style={[editor.theme.toolbar.toolbarButton]}
+                  >
+                    <View
+                      style={[
+                        editor.theme.toolbar.iconWrapper,
+                        editor.theme.toolbar.colorWrapper,
+                        {
+                          borderColor:
+                            (isTextColorSelection
+                              ? activeColor
+                              : activeHighlight) === item.value
+                              ? item.value
+                              : 'transparent',
+                        },
+                      ]}
+                    >
+                      <IconSVG
+                        circle
+                        color={
+                          item.name === 'Default'
+                            ? item.displayColor
+                            : item.value
+                        }
+                      />
+                    </View>
+                  </TouchableOpacity>
+                );
+              }}
+              horizontal
+            />
+          </View>
+        </View>
       );
     case ToolbarContext.Link:
       return (

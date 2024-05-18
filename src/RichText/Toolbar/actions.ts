@@ -28,13 +28,41 @@ export interface ToolbarItem {
   onPress: ({ editor, editorState }: ArgsToolbarCB) => () => void;
   active: ({ editor, editorState }: ArgsToolbarCB) => boolean;
   disabled: ({ editor, editorState }: ArgsToolbarCB) => boolean;
-  // image: ({ editor, editorState }: ArgsToolbarCB) => any;
-  // accept react icon component
-
   icon: ({ editor, editorState }: ArgsToolbarCB) => any;
+  color?: () => boolean;
 }
 
 export const DEFAULT_TOOLBAR_ITEMS: ToolbarItem[] = [
+  {
+    onPress:
+      ({ setToolbarContext }) =>
+      () =>
+        setToolbarContext(ToolbarContext.Highlight),
+    active: () => false,
+    disabled: () => false,
+    icon: ({ editor }) =>
+      IconSVG({
+        editor,
+        active: false,
+        disabled: false,
+        icon: SVGs.highlight,
+      }),
+  },
+  {
+    onPress:
+      ({ setToolbarContext }) =>
+      () =>
+        setToolbarContext(ToolbarContext.TextColor),
+    active: () => false,
+    disabled: () => false,
+    icon: ({ editor }) =>
+      IconSVG({
+        editor,
+        active: false,
+        disabled: false,
+        icon: SVGs.a,
+      }),
+  },
   {
     onPress:
       ({ editor }) =>
