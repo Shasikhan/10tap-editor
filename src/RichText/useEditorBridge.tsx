@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import WebView from 'react-native-webview';
 import cloneDeep from 'lodash/cloneDeep';
 import {
@@ -24,11 +24,12 @@ export type RecursivePartial<T> = {
 
 export const useEditorBridge = (options?: {
   bridgeExtensions?: BridgeExtension<any, any, any>[];
-  initialContent?: string;
+  initialContent?: string | object;
   autofocus?: boolean;
   avoidIosKeyboard?: boolean;
   customSource?: string;
   webviewBaseURL?: string;
+  editable?: boolean;
   onChange?: () => void;
   DEV?: boolean;
   DEV_SERVER_URL?: string;
@@ -51,6 +52,15 @@ export const useEditorBridge = (options?: {
     () => mergeThemes(cloneDeep(defaultEditorTheme), options?.theme),
     [options?.theme]
   );
+
+  const editable = options?.editable === undefined ? true : options.editable;
+  useEffect(() => {
+    if (options) {
+      // Special case for editable prop, since its command is on the core bridge and we want to access it via useEditorBridge
+      editorInstance?.setEditable(editable);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editable]);
 
   const _updateEditorState = (editorState: BridgeState) => {
     editorStateRef.current = editorState;
@@ -119,6 +129,7 @@ export const useEditorBridge = (options?: {
     autofocus: options?.autofocus,
     avoidIosKeyboard: options?.avoidIosKeyboard,
     customSource: options?.customSource,
+    editable,
     webviewBaseURL: options?.webviewBaseURL,
     DEV_SERVER_URL: options?.DEV_SERVER_URL,
     DEV: options?.DEV,
